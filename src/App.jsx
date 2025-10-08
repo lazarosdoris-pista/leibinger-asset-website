@@ -20,7 +20,7 @@ import businessGrowthImg from './assets/business-growth.jpg'
 import businessHandshakeImg from './assets/business-handshake.jpg'
 import seniorBusinessmanImg from './assets/senior-businessman.jpg'
 import logoWhite from './assets/logo-white.png'
-import backgroundVideo from './assets/LeibingerHomepage.mp4'
+// import backgroundVideo from './assets/LeibingerHomepage.mp4' // Video wird extern gehostet
 
 import ContactForm from './components/ContactForm.jsx'
 import ProfessionalValuationTool from './components/ProfessionalValuationTool.jsx'
@@ -130,14 +130,10 @@ function App() {
 
       {/* Hero Section */}
       <section className="relative pt-24 pb-20 px-6 overflow-hidden min-h-screen flex items-center">
-        <video 
-          src={backgroundVideo} 
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0 opacity-30"
-        />
+          {/* Video wird extern gehostet. Bitte hier den Embed-Code oder eine externe URL einfügen. */}
+          <div className="absolute inset-0 w-full h-full object-cover z-0 opacity-30 bg-slate-900 flex items-center justify-center text-slate-400 text-lg">
+            Hintergrundvideo (extern gehostet)
+          </div>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/70 z-10"></div>
         
         <div className="container mx-auto text-center relative z-20">
