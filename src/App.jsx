@@ -131,9 +131,17 @@ function App() {
       {/* Hero Section */}
       <section className="relative pt-24 pb-20 px-6 overflow-hidden min-h-screen flex items-center">
           {/* Video wird extern gehostet. Bitte hier den Embed-Code oder eine externe URL einfügen. */}
-          <div className="absolute inset-0 w-full h-full object-cover z-0 opacity-30 bg-slate-900 flex items-center justify-center text-slate-400 text-lg">
-            Hintergrundvideo (extern gehostet)
-          </div>
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="absolute inset-0 w-full h-full object-cover z-0 opacity-30"
+            poster="/path/to/your/video-poster.jpg" // Optional: Add a poster image for better user experience
+          >
+            <source src="YOUR_EXTERNAL_VIDEO_URL_HERE" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/70 z-10"></div>
         
         <div className="container mx-auto text-center relative z-20">
