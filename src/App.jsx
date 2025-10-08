@@ -136,12 +136,12 @@ function App() {
             loop 
             muted 
             playsInline 
-            className="absolute inset-0 w-full h-full object-cover z-0 opacity-50" preload="auto" poster="/placeholder-video-poster.jpg"
+            className="absolute inset-0 w-full h-full object-cover z-0" preload="auto" poster="/placeholder-video-poster.jpg"
           >
             <source src="/LeibingerHomepage.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/70 -z-1"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/70 opacity-50"></div>
         
         <div className="container mx-auto text-center relative z-20">
           <h1 className="text-5xl md:text-7xl font-light mb-8 leading-tight">
