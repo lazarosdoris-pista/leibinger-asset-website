@@ -20,7 +20,7 @@ import businessGrowthImg from './assets/business-growth.jpg'
 import businessHandshakeImg from './assets/business-handshake.jpg'
 import seniorBusinessmanImg from './assets/senior-businessman.jpg'
 import logoWhite from './assets/logo-white.png'
-import backgroundVideo from './assets/LeibingerHomepage.mp4'
+// import backgroundVideo from './assets/LeibingerHomepage.mp4' // Video is now in public directory
 
 import ContactForm from './components/ContactForm.jsx'
 import ProfessionalValuationTool from './components/ProfessionalValuationTool.jsx'
