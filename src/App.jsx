@@ -136,7 +136,7 @@ function App() {
             loop 
             muted 
             playsInline 
-            className="absolute inset-0 w-full h-full object-cover z-0 opacity-50" preload="auto"
+            className="absolute inset-0 w-full h-full object-cover z-0 opacity-50" preload="auto" poster="/placeholder-video-poster.jpg"
           >
             <source src="/LeibingerHomepage.mp4" type="video/mp4" />
             Your browser does not support the video tag.
