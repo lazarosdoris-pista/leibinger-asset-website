@@ -20,7 +20,7 @@ import businessGrowthImg from './assets/business-growth.jpg'
 import businessHandshakeImg from './assets/business-handshake.jpg'
 import seniorBusinessmanImg from './assets/senior-businessman.jpg'
 import logoWhite from './assets/logo-white.png'
-// import backgroundVideo from './assets/LeibingerHomepage.mp4' // Video wird direkt im src-Attribut referenziert
+import backgroundVideo from './assets/LeibingerHomepage.mp4'
 
 import ContactForm from './components/ContactForm.jsx'
 import ProfessionalValuationTool from './components/ProfessionalValuationTool.jsx'
@@ -138,7 +138,7 @@ function App() {
             playsInline 
             className="absolute inset-0 w-full h-full object-cover z-0 opacity-50" preload="auto"
           >
-            <source src="/src/assets/LeibingerHomepage.mp4" type="video/mp4" />
+            <source src={backgroundVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/70 z-10"></div>
