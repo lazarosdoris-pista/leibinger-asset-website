@@ -476,95 +476,25 @@ function App() {
       {/* Contact Section */}
       <section id="kontakt" className="py-12 bg-slate-800 text-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-8">Starten wir gemeinsam</h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {/* Contact Form */}
-            <div className="bg-white text-slate-900 rounded-lg p-8">
-              <h3 className="text-2xl font-bold mb-6">Kostenloses Erstgespräch</h3>
-              <form action="https://formsubmit.co/fl@leibinger-am.de" method="POST" className="space-y-4">
-                <input type="hidden" name="_subject" value="Neue Kontaktanfrage von Leibinger Asset Management" />
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_next" value="https://leibinger-widjs8.manus.space/?success=true" />
-                <div>
-                  <Label htmlFor="name">Name *</Label>
-                  <Input 
-                    id="name" 
-                    name="name"
-                    placeholder="Ihr Name" 
-                    required 
-                  />
+          <h2 className="text-3xl font-bold text-center mb-8">Kontaktieren Sie uns</h2>
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-slate-700 rounded-lg p-8 text-center">
+              <h3 className="text-2xl font-bold mb-4">Kontakt</h3>
+              <p className="text-gray-300 mb-6">
+                Interessiert an einer Partnerschaft? Schreiben Sie uns eine E-Mail und wir melden uns zeitnah bei Ihnen.
+              </p>
+              <div className="space-y-4">
+                <div className="flex items-center justify-center gap-3">
+                  <MapPin className="w-5 h-5 shrink-0" />
+                  <span>Bayern, Deutschland</span>
                 </div>
-                <div>
-                  <Label htmlFor="company">Unternehmen *</Label>
-                  <Input 
-                    id="company" 
-                    name="company"
-                    placeholder="Ihr Unternehmen" 
-                    required 
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="email">E-Mail *</Label>
-                  <Input 
-                    id="email" 
-                    name="email"
-                    type="email" 
-                    placeholder="ihre@email.de" 
-                    required 
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="phone">Telefon</Label>
-                  <Input 
-                    id="phone" 
-                    name="phone"
-                    type="tel" 
-                    placeholder="Ihre Telefonnummer (optional)" 
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="message">Ihr Anliegen *</Label>
-                  <Textarea 
-                    id="message" 
-                    name="message"
-                    placeholder="Beschreiben Sie Ihr Anliegen..." 
-                    required 
-                    rows={4}
-                  />
-                </div>
-                <Button type="submit" className="w-full bg-slate-600 hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all duration-200">
-                  Gespräch vereinbaren
-                </Button>
-              </form>
-            </div>
-
-            {/* Contact Info & Valuation */}
-            <div className="space-y-6">
-              {/* Contact Info */}
-              <div className="bg-slate-700 rounded-lg p-8">
-                <h3 className="text-2xl font-bold mb-4">Kontakt</h3>
-                <p className="text-gray-300 mb-6">
-                  Ihr direkter Draht zu unserem Team für strategische Partnerschaften im Mittelstand.
-                </p>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <MapPin className="w-5 h-5 mt-1 shrink-0" />
-                    <span>Bayern, Deutschland</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <a href="mailto:beteiligung@leibinger-am.de" className="flex items-start gap-3 hover:text-slate-400 transition-colors">
-                      <span className="text-lg">✉️</span>
-                      <p>E-Mail: beteiligung@leibinger-am.de</p>
-                    </a>
-                  </div>
+                <div className="flex items-center justify-center gap-3">
+                  <a href="mailto:beteiligung@leibinger-am.de" className="flex items-center gap-3 hover:text-slate-400 transition-colors text-lg">
+                    <span className="text-2xl">✉️</span>
+                    <p className="font-semibold">beteiligung@leibinger-am.de</p>
+                  </a>
                 </div>
               </div>
-
-
             </div>
           </div>
         </div>
