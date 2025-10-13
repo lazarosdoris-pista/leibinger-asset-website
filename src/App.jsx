@@ -1,482 +1,669 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button.jsx'
-import { Card, CardContent } from '@/components/ui/card.jsx'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
-import { Badge } from '@/components/ui/badge.jsx'
+import { Input } from '@/components/ui/input.jsx'
+import { Label } from '@/components/ui/label.jsx'
+import { Textarea } from '@/components/ui/textarea.jsx'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog.jsx'
 import { 
-  Handshake, 
   TrendingUp, 
-  Users, 
-  Building, 
+  Handshake, 
+  Target, 
+  Euro, 
+  BarChart3, 
+  Building2, 
   MapPin, 
-  Target,
-  CheckCircle,
-  ArrowRight,
+  Calendar, 
+  Users, 
+  Shield, 
+  Zap, 
+  Star,
+  Menu,
   X,
-  Phone,
-  Mail
+  CheckCircle2
 } from 'lucide-react'
-import businessGrowthImg from './assets/business-growth.jpg'
-import businessHandshakeImg from './assets/business-handshake.jpg'
-import seniorBusinessmanImg from './assets/senior-businessman.jpg'
-import logoWhite from './assets/logo-white.png'
-// import backgroundVideo from './assets/LeibingerHomepage.mp4' // Video is now in public directory
-
-import ContactForm from './components/ContactForm.jsx'
-import ProfessionalValuationTool from './components/ProfessionalValuationTool.jsx'
-import CookieBanner from './components/CookieBanner.jsx'
-import MobileNavigation from './components/MobileNavigation.jsx'
-import ImpressumModal from './components/ImpressumModal.jsx'
-import SEOHead from './components/SEOHead.jsx'
-import ErweiterteDatenschutzerklaerung from './components/ErweiterteDatenschutzerklaerung.jsx'
-import { CookieWiderrufButton, ErweiterteCookieEinstellungen } from './components/CookieWiderrufButton.jsx'
-import FAQSection from './components/FAQSection.jsx'
+import logo from './assets/logo.png'
 import './App.css'
 
 function App() {
-  const [showCookieBanner, setShowCookieBanner] = useState(true)
-  const [showPrivacyModal, setShowPrivacyModal] = useState(false)
-  const [showImpressumModal, setShowImpressumModal] = useState(false)
-  const [showCookieSettingsModal, setShowCookieSettingsModal] = useState(false)
-  const [showContactForm, setShowContactForm] = useState(false)
-  const [showValuationTool, setShowValuationTool] = useState(false)
-  const [showExtendedCookieSettings, setShowExtendedCookieSettings] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [cookiesAccepted, setCookiesAccepted] = useState(false)
+  const [activeService, setActiveService] = useState(0)
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    message: ''
+  })
+
+  const services = [
+    {
+      icon: TrendingUp,
+      title: 'Wachstum',
+      subtitle: 'Skalierung & Expansion',
+      description: 'Von der Vision zur Million – Wir begleiten Ihr Unternehmen auf dem Weg zu nachhaltigem Wachstum und einer Skalierung auf über 1 Mio. EUR Umsatz.',
+      color: 'bg-slate-700',
+      features: [
+        'Strategieentwicklung',
+        'Marktexpansion',
+        'Prozessoptimierung',
+        'Finanzierungsstruktur'
+      ]
+    },
+    {
+      icon: Handshake,
+      title: 'Beteiligung',
+      subtitle: 'Strategische Partnerschaften',
+      description: 'Mehr als nur Kapital – Wir investieren direkt in Ihr Unternehmen und bringen aktive operative Unterstützung und jahrelange Expertise mit ein.',
+      color: 'bg-slate-600',
+      features: [
+        'Eigenkapitalinvestment',
+        'Operative Unterstützung',
+        'Netzwerkzugang',
+        'Strategische Beratung'
+      ]
+    },
+    {
+      icon: Target,
+      title: 'Nachfolge',
+      subtitle: 'Unternehmensübergabe',
+      description: 'Ihr Lebenswerk in sicheren Händen – Wir entwickeln eine maßgeschneiderte Nachfolgestrategie und begleiten Sie durch den gesamten Übergabeprozess.',
+      color: 'bg-slate-800',
+      features: [
+        'Nachfolgestrategie',
+        'Nachfolger-Suche',
+        'Vertragsverhandlung',
+        'Kontinuitätssicherung'
+      ]
+    }
+  ]
+
+  const investmentCriteria = [
+    {
+      icon: Euro,
+      title: 'Umsatzvolumen',
+      main: '500k - 10 Mio. EUR Jahresumsatz',
+      description: 'Etablierte Unternehmen mit stabiler Umsatzentwicklung'
+    },
+    {
+      icon: BarChart3,
+      title: 'Profitabilität',
+      main: 'Positive EBITDA-Marge',
+      description: 'Nachweislich rentable Geschäftsmodelle'
+    },
+    {
+      icon: Building2,
+      title: 'Branchen',
+      main: 'Traditionelle Industrien',
+      description: 'Fokus auf Handwerk, Produktion, Dienstleistungen'
+    },
+    {
+      icon: MapPin,
+      title: 'Standort',
+      main: 'Bayern & Süddeutschland',
+      description: 'Regionale Nähe für persönliche Betreuung'
+    },
+    {
+      icon: Calendar,
+      title: 'Zeithorizont',
+      main: 'Langfristige Partnerschaft',
+      description: 'Mindestens 5-10 Jahre Zusammenarbeit'
+    },
+    {
+      icon: Building2,
+      title: 'Management',
+      main: 'Engagierte Führung',
+      description: 'Motivierte Unternehmer mit Wachstumswillen'
+    }
+  ]
+
+  const processSteps = [
+    {
+      number: 1,
+      icon: Users,
+      title: 'Erstgespräch',
+      description: 'Kostenlose Analyse Ihrer Situation und Ihrer Ziele',
+      duration: '1-2 Wochen',
+      color: 'bg-slate-700'
+    },
+    {
+      number: 2,
+      icon: Shield,
+      title: 'Due Diligence',
+      description: 'Umfassende Prüfung und Bewertung Ihres Unternehmens',
+      duration: '2-4 Wochen',
+      color: 'bg-slate-600'
+    },
+    {
+      number: 3,
+      icon: Target,
+      title: 'Strategie',
+      description: 'Entwicklung maßgeschneiderter Lösungen und Roadmap',
+      duration: '1-2 Wochen',
+      color: 'bg-slate-700'
+    },
+    {
+      number: 4,
+      icon: Zap,
+      title: 'Umsetzung',
+      description: 'Gemeinsame Realisierung der vereinbarten Ziele',
+      duration: 'Laufend',
+      color: 'bg-slate-600'
+    },
+    {
+      number: 5,
+      icon: Star,
+      title: 'Erfolg',
+      description: 'Nachhaltiger Unternehmenserfolg und langfristige Partnerschaft',
+      duration: 'Langfristig',
+      color: 'bg-slate-800'
+    }
+  ]
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
+    setMobileMenuOpen(false)
   }
 
-  const openContactForm = () => setShowContactForm(true)
-  const openValuationTool = () => setShowValuationTool(true)
+  const handleFormSubmit = (e) => {
+    e.preventDefault()
+    console.log('Form submitted:', formData)
+    alert('Vielen Dank für Ihre Anfrage! Wir werden uns in Kürze bei Ihnen melden.')
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
-      <SEOHead />
-      {/* Header */}
-      <header className="fixed top-0 w-full bg-slate-950/95 backdrop-blur-sm z-50 border-b border-slate-800">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <img 
-                src={logoWhite} 
-                alt="LEIBINGER ASSET MANAGEMENT" 
-                className="h-8 w-auto filter brightness-0 invert"
-              />
+    <div className="min-h-screen bg-gray-50">
+      {/* Cookie Banner */}
+      {!cookiesAccepted && (
+        <div className="fixed bottom-0 left-0 right-0 bg-slate-800 text-white p-4 z-50 shadow-lg">
+          <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm">
+              Wir verwenden Cookies, um die Funktionalität unserer Website zu gewährleisten und zu verbessern. 
+              Durch die Nutzung unserer Website stimmen Sie der Verwendung von Cookies zu. 
+              Weitere Informationen finden Sie in unserer{' '}
+              <a href="#" className="underline">Datenschutzerklärung</a>.
+            </p>
+            <div className="flex gap-2 shrink-0">
+              <Button onClick={() => setCookiesAccepted(true)} className="bg-slate-800 hover:bg-slate-900">
+                Alle Cookies akzeptieren
+              </Button>
+              <Button onClick={() => setCookiesAccepted(true)} variant="outline" className="text-white border-white hover:bg-slate-700">
+                Ablehnen
+              </Button>
             </div>
-            <nav className="hidden md:flex space-x-8">
-              <Button 
-                variant="ghost" 
-                onClick={() => scrollToSection('wachstum')} 
-                className="text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-200 font-medium"
-              >
-                Wachstum
-              </Button>
-              <Button 
-                variant="ghost" 
-                onClick={() => scrollToSection('beteiligung')} 
-                className="text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-200 font-medium"
-              >
-                Beteiligung
-              </Button>
-              <Button 
-                variant="ghost" 
-                onClick={() => scrollToSection('nachfolge')} 
-                className="text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-200 font-medium"
-              >
-                Nachfolge
-              </Button>
-              <Button 
-                variant="ghost" 
-                onClick={openValuationTool}
-                className="text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-200 font-medium"
-              >
-                Unternehmensbewertung
-              </Button>
-              <Button 
-                variant="ghost" 
-                onClick={() => scrollToSection('about-us')}
-                className="text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-200 font-medium"
-              >
-                Philosophie
-              </Button>
-              <Button 
-                variant="ghost" 
-                onClick={() => scrollToSection('investment-profile')} 
-                className="text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-200 font-medium"
-              >
-                Investitionsprofil
-              </Button>
-              <Button 
-                variant="ghost" 
-                onClick={openContactForm}
-                className="text-slate-300 hover:text-white hover:bg-slate-800/50 transition-all duration-200 font-medium"
-              >
-                Kontakt
-              </Button>
-            </nav>
-            
-            {/* Mobile Navigation */}
-            <MobileNavigation 
-              scrollToSection={scrollToSection}
-              openContactForm={openContactForm}
-              openValuationTool={openValuationTool}
-            />
           </div>
+        </div>
+      )}
+
+      {/* Header */}
+      <header className="sticky top-0 bg-white shadow-sm z-40">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <img src={logo} alt="Leibinger Asset Management" className="h-10" />
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-6">
+              <Button variant="ghost" onClick={() => scrollToSection('wachstum')}>Wachstum</Button>
+              <Button variant="ghost" onClick={() => scrollToSection('beteiligung')}>Beteiligung</Button>
+              <Button variant="ghost" onClick={() => scrollToSection('investitionsprofil')}>Investitionsprofil</Button>
+              <Button variant="ghost" onClick={() => scrollToSection('kontakt')}>Kontakt</Button>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <Button 
+              variant="ghost" 
+              className="md:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X /> : <Menu />}
+            </Button>
+          </div>
+
+          {/* Mobile Navigation */}
+          {mobileMenuOpen && (
+            <nav className="md:hidden mt-4 flex flex-col gap-2">
+              <Button variant="ghost" onClick={() => { scrollToSection('wachstum'); setMobileMenuOpen(false); }}>Wachstum</Button>
+              <Button variant="ghost" onClick={() => { scrollToSection('beteiligung'); setMobileMenuOpen(false); }}>Beteiligung</Button>
+              <Button variant="ghost" onClick={() => { scrollToSection('investitionsprofil'); setMobileMenuOpen(false); }}>Investitionsprofil</Button>
+              <Button variant="ghost" onClick={() => { scrollToSection('kontakt'); setMobileMenuOpen(false); }}>Kontakt</Button>
+            </nav>
+          )}
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-24 pb-20 px-6 overflow-hidden min-h-screen flex items-center">
-          {/* Video wird extern gehostet. Bitte hier den Embed-Code oder eine externe URL einfügen. */}
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            className="absolute inset-0 w-full h-full object-cover -z-1 opacity-100" preload="auto"
-          >
-            <source src="/LeibingerHomepage.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/70 z-0 opacity-50"></div>
-        
-        <div className="container mx-auto text-center relative z-20">
-          <h1 className="text-5xl md:text-7xl font-light mb-8 leading-tight">
-            Ihr Partner für<br />
-            <span className="font-medium text-slate-200">Wachstum</span>, <span className="font-medium text-slate-200">Beteiligung</span><br />
-            und <span className="font-medium text-slate-200">Nachfolge</span><br />
-            <span className="text-3xl md:text-4xl text-slate-400 font-light">im Mittelstand</span>
+      <section className="py-16 bg-gradient-to-br from-slate-50 to-slate-100">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-4">
+            Mehr als<br />Kapital
           </h1>
-          
-          <p className="text-xl md:text-2xl text-slate-300 mb-12 max-w-4xl mx-auto font-light leading-relaxed">
-            Wir begleiten Unternehmer aus traditionellen Branchen in Bayern – von der Gründung über die Skalierung bis zur erfolgreichen Unternehmensübergabe. Persönlich, partnerschaftlich und mit einem starken Netzwerk.
+          <p className="text-lg text-slate-600 mb-6 max-w-3xl mx-auto">
+            Ihr strategischer Partner für nachhaltigen Erfolg im bayerischen Mittelstand
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
-              onClick={openValuationTool}
-              className="bg-slate-700 hover:bg-slate-600 text-slate-100 hover:text-white border border-slate-600 hover:border-slate-500 px-10 py-4 text-lg font-medium transition-all duration-300"
-            >
-              Unternehmenswert berechnen
-            </Button>
-            <Button 
-              onClick={openContactForm}
-              className="bg-slate-600 hover:bg-slate-500 text-slate-100 hover:text-white border border-slate-500 hover:border-slate-400 px-10 py-4 text-lg font-medium transition-all duration-300"
+              size="lg" 
+              className="bg-slate-800 hover:bg-slate-900 text-white"
+              onClick={() => scrollToSection('kontakt')}
             >
               Kostenloses Erstgespräch
             </Button>
           </div>
-          
-          <div className="flex flex-col sm:flex-row gap-8 justify-center text-sm text-slate-400">
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-slate-300" />
-              <span>Kostenlos in 5 Minuten</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-slate-300" />
-              <span>Professionelle Methodik</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <CheckCircle className="w-5 h-5 text-slate-300" />
-              <span>Sofortiges Ergebnis</span>
-            </div>
+        </div>
+      </section>
+
+      {/* Service Cards */}
+      <section id="services" className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8">
+            {services.map((service, index) => {
+              const Icon = service.icon
+              return (
+                <div 
+                  key={index}
+                  id={service.title.toLowerCase()}
+                  className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow border-2 border-slate-300"
+                >
+                  <div className={`${service.color} w-14 h-14 rounded-full flex items-center justify-center mb-4 mx-auto`}>
+                    <Icon className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-center mb-2">{service.title}</h3>
+                  <p className="text-sm text-gray-600 text-center mb-4">{service.subtitle}</p>
+                  <p className="text-gray-700 text-center mb-6">{service.description}</p>
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-slate-400 text-slate-700 hover:bg-slate-50"
+                  >
+                    Mehr erfahren
+                  </Button>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* Wachstum Section */}
-      <section id="wachstum" className="py-24 px-6 bg-slate-900/50">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <Badge className="bg-slate-800 text-slate-200 mb-6 px-4 py-2 text-sm font-medium">
-              Für Gründer & Wachstumsunternehmen
-            </Badge>
-          </div>
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-light mb-8 leading-tight">
-                Nachhaltiges Wachstum durch<br />
-                <span className="font-medium">strategische Partnerschaften</span>
-              </h2>
-              <p className="text-slate-300 mb-8 text-lg leading-relaxed">
-                Sie haben eine starke Vision für Ihr Unternehmen, aber das Tagesgeschäft und fehlende Strukturen bremsen Ihr Wachstum? Wir helfen Ihnen, solide Prozesse aufzubauen, Ihre Effizienz zu steigern und Ihr Unternehmen nachhaltig auf über 1 Mio. EUR Umsatz zu skalieren.
-              </p>
-              <ul className="space-y-4 mb-10">
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Strategische Geschäftsplanung & Business Model Development</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Prozessoptimierung & Digitalisierung</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Finanzplanung & Controlling</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Zugang zu unserem Experten-Netzwerk</span>
-                </li>
-              </ul>
-              <div className="space-y-4">
-                <Button 
-                  onClick={openContactForm}
-                  className="bg-slate-700 hover:bg-slate-600 text-slate-100 hover:text-white border border-slate-600 hover:border-slate-500 px-8 py-3 font-medium transition-all duration-300 w-full sm:w-auto"
-                >
-                  Kostenloses Wachstums-Coaching anfordern
-                </Button>
-                <br />
-                <Button 
-                  onClick={openValuationTool}
-                  className="bg-slate-600 hover:bg-slate-500 text-slate-100 hover:text-white border border-slate-500 hover:border-slate-400 px-8 py-3 font-medium transition-all duration-300 w-full sm:w-auto"
-                >
-                  Wachstumspotential ermitteln
-                </Button>
+      {/* Expertise Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Unsere Expertise</h2>
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg p-8 shadow-lg">
+              {services.map((service, index) => {
+                const Icon = service.icon
+                return (
+                  <div 
+                    key={index}
+                    className={`${activeService === index ? 'block' : 'hidden'}`}
+                  >
+                    <div className="mb-6">
+                      <span className="inline-block px-4 py-2 bg-white rounded-full text-sm text-gray-600 mb-4">
+                        {service.subtitle}
+                      </span>
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                      {/* Left Column - Text */}
+                      <div>
+                        <h3 className="text-3xl font-bold mb-4">{service.title}</h3>
+                        <p className="text-base text-gray-700 mb-6">{service.description}</p>
+                        
+                        {/* Feature List with Checkmarks */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                          {service.features.map((feature, idx) => (
+                            <div key={idx} className="flex items-center gap-2">
+                              <CheckCircle2 className="w-5 h-5 text-slate-600 flex-shrink-0" />
+                              <span className="text-gray-700">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <Button 
+                          variant="default" 
+                          className="bg-slate-700 hover:bg-slate-800"
+                        >
+                          Mehr erfahren
+                        </Button>
+                      </div>
+                      
+                      {/* Right Column - Large Icon */}
+                      <div className="flex justify-center">
+                        <div className={`${service.color} w-56 h-56 rounded-full flex items-center justify-center shadow-2xl`}>
+                          <Icon className="w-28 h-28 text-white" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+              
+              {/* Carousel Dots */}
+              <div className="flex justify-center gap-3 mt-12">
+                {services.map((service, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveService(index)}
+                    className={`w-4 h-4 rounded-full transition-all ${
+                      activeService === index 
+                        ? service.color.replace('bg-', 'bg-') + ' scale-125' 
+                        : 'bg-gray-300'
+                    }`}
+                    aria-label={`Service ${index + 1} auswählen`}
+                  />
+                ))}
               </div>
             </div>
-            <div className="relative">
-              <img 
-                src={businessGrowthImg} 
-                alt="Geschäftswachstum durch strategische Partnerschaften - Leibinger Asset Management unterstützt Unternehmer bei der Skalierung" 
-                className="rounded-lg shadow-2xl w-full h-auto"
-              />
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Beteiligung Section */}
-      <section id="beteiligung" className="py-24 px-6">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <Badge className="bg-slate-800 text-slate-200 mb-6 px-4 py-2 text-sm font-medium">
-              Für Unternehmensbeteiligungen
-            </Badge>
-          </div>
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="relative">
-              <img 
-                src={businessHandshakeImg} 
-                alt="Strategische Unternehmensbeteiligung - Handschlag zwischen Geschäftspartnern als Symbol für vertrauensvolle Zusammenarbeit" 
-                className="rounded-lg shadow-2xl w-full h-auto"
-              />
-            </div>
-            <div>
-              <h2 className="text-4xl md:text-5xl font-light mb-8 leading-tight">
-                Wir investieren direkt<br />
-                <span className="font-medium">in Ihr Unternehmen</span>
-              </h2>
-              <p className="text-slate-300 mb-8 text-lg leading-relaxed">
-                Sie suchen einen starken Partner, der nicht nur Kapital einbringt, sondern sich aktiv an der Weiterentwicklung Ihres Unternehmens beteiligt? Wir investieren direkt in etablierte Betriebe und bringen unsere Expertise, unser Netzwerk und unsere Erfahrung ein.
-              </p>
-              <ul className="space-y-4 mb-10">
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Direkte Beteiligung als strategischer Partner</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Aktive operative Unterstützung und Expertise</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Zugang zu unserem Experten-Netzwerk</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Langfristige Partnerschaft für nachhaltiges Wachstum</span>
-                </li>
-              </ul>
-              <Button 
-                onClick={openContactForm}
-                className="bg-slate-700 hover:bg-slate-600 text-slate-100 hover:text-white border border-slate-600 hover:border-slate-500 px-8 py-3 font-medium transition-all duration-300"
-              >
-                Partnerschaftsgespräch vereinbaren
-              </Button>
-            </div>
+      {/* Investment Profile */}
+      <section id="investitionsprofil" className="py-12 bg-gradient-to-br from-slate-50 to-slate-100">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-3">Unser Investitionsprofil</h2>
+          <p className="text-lg text-gray-600 text-center mb-8 max-w-3xl mx-auto">
+            Wir investieren gezielt in mittelständische Unternehmen mit klaren Kriterien und langfristiger Perspektive
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {investmentCriteria.map((criterion, index) => {
+              const Icon = criterion.icon
+              return (
+                <div key={index} className="bg-white rounded-lg p-6 shadow-lg">
+                  <div className="bg-slate-700 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{criterion.title}</h3>
+                  <p className="font-semibold text-gray-900 mb-2">{criterion.main}</p>
+                  <p className="text-gray-600 text-sm">{criterion.description}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
 
-      {/* Nachfolge Section */}
-      <section id="nachfolge" className="py-24 px-6 bg-slate-900/50">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <Badge className="bg-slate-800 text-slate-200 mb-6 px-4 py-2 text-sm font-medium">
-              Für Nachfolgeregelung
-            </Badge>
-          </div>
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-light mb-8 leading-tight">
-                Die Zukunft Ihres<br />
-                <span className="font-medium">Unternehmens sichern</span>
-              </h2>
-              <p className="text-slate-300 mb-8 text-lg leading-relaxed">
-                Der Ruhestand rückt näher und Sie möchten sicherstellen, dass Ihr Unternehmen erfolgreich weitergeführt wird? Eine gut geplante Nachfolge ist der Schlüssel zur Sicherung Ihres Lebenswerks. Wir begleiten Sie durch den gesamten Prozess.
-              </p>
-              <ul className="space-y-4 mb-10">
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Entwicklung einer langfristigen Nachfolgestrategie</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Suche und Auswahl geeigneter Nachfolger</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Begleitung bei Vertragsverhandlungen und Übergabe</span>
-                </li>
-                <li className="flex items-start gap-4">
-                  <CheckCircle className="w-6 h-6 text-slate-300 mt-1 flex-shrink-0" />
-                  <span className="text-slate-200">Sicherstellung der Kontinuität und des Unternehmenswerts</span>
-                </li>
-              </ul>
-              <Button 
-                onClick={openContactForm}
-                className="bg-slate-700 hover:bg-slate-600 text-slate-100 hover:text-white border border-slate-600 hover:border-slate-500 px-8 py-3 font-medium transition-all duration-300"
-              >
-                Nachfolgeplanung starten
-              </Button>
-            </div>
-            <div className="relative">
-              <img 
-                src={seniorBusinessmanImg} 
-                alt="Erfahrener Unternehmer plant seine Nachfolge - Symbol für die Sicherung des Lebenswerks mit Leibinger Asset Management" 
-                className="rounded-lg shadow-2xl w-full h-auto"
-              />
-            </div>
-          </div>
+      {/* CTA Section 1 */}
+      <section className="py-12 bg-slate-800 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">Passt Ihr Unternehmen zu unserem Profil?</h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto">
+            Lassen Sie uns in einem unverbindlichen Gespräch herausfinden, ob wir der richtige Partner für Ihr Unternehmen sind.
+          </p>
+          <Button 
+            size="lg" 
+            className="bg-slate-800 hover:bg-slate-900"
+            onClick={() => scrollToSection('kontakt')}
+          >
+            Jetzt Gespräch vereinbaren
+          </Button>
         </div>
       </section>
 
-      {/* About Us Section */}
-      <section id="about-us" className="py-24 px-6">
-        <div className="container mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-light mb-16">Unsere Philosophie</h2>
-          <div className="grid md:grid-cols-3 gap-12">
-            <Card className="bg-slate-900 border-slate-800 text-center p-8 transform hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:shadow-slate-700/50">
-              <CardContent>
-                <div className="flex justify-center mb-6">
-                  <div className="bg-slate-800 p-4 rounded-full">
-                    <Handshake className="w-8 h-8 text-slate-300" />
+      {/* Process Section */}
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-3">Unser Prozess</h2>
+          <p className="text-lg text-gray-600 text-center mb-8 max-w-4xl mx-auto">
+            Von der ersten Kontaktaufnahme bis zur erfolgreichen Partnerschaft – Ihr Weg zu nachhaltigem Unternehmenserfolg in 5 strukturierten Schritten
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+            {processSteps.map((step, index) => {
+              const Icon = step.icon
+              return (
+                <div key={index} className="relative">
+                  <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-8 h-full flex flex-col items-center text-center hover:shadow-xl transition-shadow">
+                    {/* Number Badge */}
+                    <div className={`${step.color} w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-2xl mb-6 shadow-lg`}>
+                      {step.number}
+                    </div>
+                    {/* Large Icon Circle */}
+                    <div className={`${step.color} w-24 h-24 rounded-full flex items-center justify-center mb-6 shadow-2xl`}>
+                      <Icon className="w-12 h-12 text-white" />
+                    </div>
+                    {/* Content */}
+                    <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+                    <p className="text-sm text-gray-700 mb-4 flex-grow">{step.description}</p>
+                    <p className="text-xs text-gray-500 font-medium">{step.duration}</p>
                   </div>
                 </div>
-                <h3 className="text-2xl font-medium mb-4">Partnerschaftlich</h3>
-                <p className="text-slate-400 leading-relaxed">Wir arbeiten auf Augenhöhe mit Ihnen zusammen und treffen Entscheidungen gemeinsam.</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-slate-900 border-slate-800 text-center p-8 transform hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:shadow-slate-700/50">
-              <CardContent>
-                <div className="flex justify-center mb-6">
-                  <div className="bg-slate-800 p-4 rounded-full">
-                    <TrendingUp className="w-8 h-8 text-slate-300" />
-                  </div>
-                </div>
-                <h3 className="text-2xl font-medium mb-4">Langfristig</h3>
-                <p className="text-slate-400 leading-relaxed">Unser Ziel ist die nachhaltige Entwicklung Ihres Unternehmens, nicht der schnelle Exit.</p>
-              </CardContent>
-            </Card>
-            <Card className="bg-slate-900 border-slate-800 text-center p-8 transform hover:-translate-y-2 transition-transform duration-300 shadow-lg hover:shadow-slate-700/50">
-              <CardContent>
-                <div className="flex justify-center mb-6">
-                  <div className="bg-slate-800 p-4 rounded-full">
-                    <Users className="w-8 h-8 text-slate-300" />
-                  </div>
-                </div>
-                <h3 className="text-2xl font-medium mb-4">Persönlich</h3>
-                <p className="text-slate-400 leading-relaxed">Sie haben einen festen Ansprechpartner, der Sie und Ihr Unternehmen genau kennt.</p>
-              </CardContent>
-            </Card>
+              )
+            })}
           </div>
         </div>
       </section>
 
+      {/* CTA Section 2 */}
+      <section className="py-12 bg-slate-800 text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold mb-4">Bereit für den ersten Schritt?</h2>
+          <p className="text-lg mb-8 max-w-2xl mx-auto">
+            Lassen Sie uns gemeinsam Ihr Unternehmen auf das nächste Level bringen. Vereinbaren Sie noch heute Ihr kostenloses Erstgespräch.
+          </p>
+          <Button 
+            size="lg" 
+            className="bg-slate-800 hover:bg-slate-900"
+            onClick={() => scrollToSection('kontakt')}
+          >
+            Prozess starten
+          </Button>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="kontakt" className="py-12 bg-slate-800 text-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Starten wir gemeinsam</h2>
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            {/* Contact Form */}
+            <div className="bg-white text-slate-900 rounded-lg p-8">
+              <h3 className="text-2xl font-bold mb-6">Kostenloses Erstgespräch</h3>
+              <form onSubmit={handleFormSubmit} className="space-y-4">
+                <div>
+                  <Label htmlFor="name">Name *</Label>
+                  <Input 
+                    id="name" 
+                    name="name"
+                    placeholder="Ihr Name" 
+                    required 
+                    value={formData.name}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="company">Unternehmen *</Label>
+                  <Input 
+                    id="company" 
+                    name="company"
+                    placeholder="Ihr Unternehmen" 
+                    required 
+                    value={formData.company}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="email">E-Mail *</Label>
+                  <Input 
+                    id="email" 
+                    name="email"
+                    type="email" 
+                    placeholder="ihre@email.de" 
+                    required 
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="phone">Telefon</Label>
+                  <Input 
+                    id="phone" 
+                    name="phone"
+                    type="tel" 
+                    placeholder="+49 (0) 89 123 456 78" 
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="message">Ihr Anliegen *</Label>
+                  <Textarea 
+                    id="message" 
+                    name="message"
+                    placeholder="Beschreiben Sie Ihr Anliegen..." 
+                    required 
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <Button type="submit" className="w-full bg-slate-800 hover:bg-slate-700">
+                  Gespräch vereinbaren
+                </Button>
+              </form>
+            </div>
+
+            {/* Contact Info & Valuation */}
+            <div className="space-y-6">
+              {/* Contact Info */}
+              <div className="bg-slate-700 rounded-lg p-8">
+                <h3 className="text-2xl font-bold mb-4">Kontakt</h3>
+                <p className="text-gray-300 mb-6">
+                  Ihr direkter Draht zu unserem Team für strategische Partnerschaften im bayerischen Mittelstand.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="w-5 h-5 mt-1 shrink-0" />
+                    <span>Bayern, Deutschland</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <a href="tel:+4989123456" className="flex items-start gap-3 hover:text-slate-400 transition-colors">
+                      <span className="text-lg">📞</span>
+                      <span>+49 (0) 89 123 456 78</span>
+                    </a>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <a href="mailto:nfo@leibinger-am.de" className="flex items-start gap-3 hover:text-slate-400 transition-colors">
+                      <span className="text-lg">✉️</span>
+                      <span>nfo@leibinger-am.de</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
 
 
-      {/* <FAQSection /> */}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900/50 border-t border-slate-800 py-12 px-6">
-        <div className="container mx-auto text-center text-slate-400">
-          <div className="flex justify-center gap-8 mb-8">
-            <a href="#" onClick={(e) => {e.preventDefault(); setShowImpressumModal(true);}} className="hover:text-white transition-colors">Impressum</a>
-            <a href="#" onClick={(e) => {e.preventDefault(); setShowPrivacyModal(true);}} className="hover:text-white transition-colors">Datenschutz</a>
-            <a href="#" onClick={(e) => {e.preventDefault(); openContactForm();}} className="hover:text-white transition-colors">Kontakt</a>
+      <footer className="bg-slate-900 text-white py-12">
+        <div className="container mx-auto px-4 text-center">
+          <h3 className="text-2xl font-bold mb-2">Leibinger Asset Management</h3>
+          <p className="text-gray-400 mb-6">
+            Ihr strategischer Partner für nachhaltigen Erfolg im Mittelstand
+          </p>
+          <div className="flex justify-center gap-6">
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="text-slate-400 hover:text-slate-300 transition-colors cursor-pointer">
+                  Impressum
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Impressum</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 text-sm">
+                  <div>
+                    <h3 className="font-bold mb-2">Angaben gemäß § 5 TMG</h3>
+                    <p>Leibinger Asset Management GmbH</p>
+                    <p>Herterichstr. 174</p>
+                    <p>81476 München</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">Kontakt</h3>
+                    <p>Telefon: +49 (0) 89 123 456 78</p>
+                    <p>E-Mail: info@leibinger-am.de</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">Vertretungsberechtigte Geschäftsführer</h3>
+                    <p>Fabian Leibinger</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">Registereintrag</h3>
+                    <p>Eintragung im Handelsregister</p>
+                    <p>Registergericht: Amtsgericht München</p>
+                    <p>Registernummer: HRB 123456</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">Umsatzsteuer-ID</h3>
+                    <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
+                    <p>DE123456789</p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+            
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className="text-slate-400 hover:text-slate-300 transition-colors cursor-pointer">
+                  Datenschutz
+                </button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Datenschutzerklärung</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 text-sm">
+                  <div>
+                    <h3 className="font-bold mb-2">1. Datenschutz auf einen Blick</h3>
+                    <h4 className="font-semibold mb-1">Allgemeine Hinweise</h4>
+                    <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">2. Datenerfassung auf dieser Website</h3>
+                    <h4 className="font-semibold mb-1">Wer ist verantwortlich für die Datenerfassung auf dieser Website?</h4>
+                    <p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Impressum dieser Website entnehmen.</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">Wie erfassen wir Ihre Daten?</h4>
+                    <p>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z.B. um Daten handeln, die Sie in ein Kontaktformular eingeben.</p>
+                    <p className="mt-2">Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z.B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs).</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold mb-1">Wofür nutzen wir Ihre Daten?</h4>
+                    <p>Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">3. Kontaktformular</h3>
+                    <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-bold mb-2">4. Cookies</h3>
+                    <p>Unsere Website verwendet Cookies. Das sind kleine Textdateien, die Ihr Webbrowser auf Ihrem Endgerät speichert. Cookies helfen uns dabei, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen.</p>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
-          <p>&copy; {new Date().getFullYear()} Leibinger Asset Management. Alle Rechte vorbehalten.</p>
         </div>
       </footer>
-
-      {/* Contact Form Dialog */}
-      <Dialog open={showContactForm} onOpenChange={setShowContactForm}>
-        <DialogContent className="bg-slate-900 border-slate-700 text-slate-100 max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-light">Kostenloses Erstgespräch vereinbaren</DialogTitle>
-          </DialogHeader>
-          <ContactForm />
-        </DialogContent>
-      </Dialog>
-
-      {/* Valuation Tool Dialog */}
-      <Dialog open={showValuationTool} onOpenChange={setShowValuationTool}>
-        <DialogContent className="bg-slate-900 border-slate-700 text-slate-100 !max-w-none !w-screen !max-h-none !h-screen overflow-y-auto !m-0 !p-6 rounded-none !fixed !inset-0 !transform-none !translate-x-0 !translate-y-0">
-          <DialogHeader>
-            <DialogTitle className="text-4xl font-light text-white mb-4">Professionelle Unternehmensbewertung</DialogTitle>
-          </DialogHeader>
-          <ProfessionalValuationTool isOpen={showValuationTool} />
-        </DialogContent>
-      </Dialog>
-
-      {/* Privacy Modal */}
-      <Dialog open={showPrivacyModal} onOpenChange={setShowPrivacyModal}>
-        <DialogContent className="bg-slate-900 border-slate-700 text-slate-100 max-w-4xl h-[80vh] flex flex-col">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-light">Datenschutzerklärung</DialogTitle>
-          </DialogHeader>
-          <div className="flex-grow overflow-y-auto pr-4">
-            <ErweiterteDatenschutzerklaerung />
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Impressum Modal */}
-      <Dialog open={showImpressumModal} onOpenChange={setShowImpressumModal}>
-        <DialogContent className="bg-slate-900 border-slate-700 text-slate-100 max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-light">Impressum</DialogTitle>
-          </DialogHeader>
-          <ImpressumModal />
-        </DialogContent>
-      </Dialog>
-
-      {/* Cookie Settings Modal */}
-      <Dialog open={showExtendedCookieSettings} onOpenChange={setShowExtendedCookieSettings}>
-        <DialogContent className="bg-slate-900 border-slate-700 text-slate-100 max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-light">Cookie-Einstellungen</DialogTitle>
-          </DialogHeader>
-          <ErweiterteCookieEinstellungen />
-        </DialogContent>
-      </Dialog>
-
-      <CookieWiderrufButton onClick={() => setShowExtendedCookieSettings(true)} />
-
-      {showCookieBanner && (
-        <CookieBanner 
-          onAcceptAll={() => setShowCookieBanner(false)}
-          onRejectAll={() => setShowCookieBanner(false)}
-          onCustomize={() => setShowExtendedCookieSettings(true)}
-          setShowPrivacyModal={setShowPrivacyModal}
-        />
-      )}
     </div>
-  );
+  )
 }
 
 export default App
