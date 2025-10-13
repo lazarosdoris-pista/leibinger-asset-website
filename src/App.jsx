@@ -33,8 +33,20 @@ import './App.css'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [cookiesAccepted, setCookiesAccepted] = useState(false)
+  const [cookieBannerVisible, setCookieBannerVisible] = useState(() => {
+    return localStorage.getItem('cookiePreference') === null
+  })
   const [activeService, setActiveService] = useState(0)
+  
+  const handleCookieAccept = () => {
+    localStorage.setItem('cookiePreference', 'accepted')
+    setCookieBannerVisible(false)
+  }
+  
+  const handleCookieDecline = () => {
+    localStorage.setItem('cookiePreference', 'declined')
+    setCookieBannerVisible(false)
+  }
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -89,8 +101,8 @@ function App() {
     {
       icon: Euro,
       title: 'Umsatzvolumen',
-      main: '500k - 10 Mio. EUR Jahresumsatz',
-      description: 'Etablierte Unternehmen mit stabiler Umsatzentwicklung'
+      main: '100k - 5 Mio. EUR Jahresumsatz',
+      description: 'Start-ups, junge und etablierte Unternehmen mit Wachstumspotenzial'
     },
     {
       icon: BarChart3,
@@ -189,7 +201,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Cookie Banner */}
-      {!cookiesAccepted && (
+      {cookieBannerVisible && (
         <div className="fixed bottom-0 left-0 right-0 bg-slate-800 text-white p-4 z-50 shadow-lg">
           <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm">
@@ -199,10 +211,10 @@ function App() {
               <a href="#" className="underline">Datenschutzerklärung</a>.
             </p>
             <div className="flex gap-2 shrink-0">
-              <Button onClick={() => setCookiesAccepted(true)} className="bg-slate-800 hover:bg-slate-900">
+              <Button onClick={handleCookieAccept} className="bg-slate-600 hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all duration-200">
                 Alle Cookies akzeptieren
               </Button>
-              <Button onClick={() => setCookiesAccepted(true)} variant="outline" className="text-white border-white hover:bg-slate-700">
+              <Button onClick={handleCookieDecline} className="bg-slate-500 hover:bg-slate-600 text-white shadow-md hover:shadow-lg transition-all duration-200">
                 Ablehnen
               </Button>
             </div>
@@ -250,15 +262,15 @@ function App() {
       <section className="py-16 bg-gradient-to-br from-slate-50 to-slate-100">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-7xl font-bold text-slate-900 mb-4">
-            Mehr als<br />Kapital
+            Wachstum gestalten.<br />Werte schaffen.
           </h1>
           <p className="text-lg text-slate-600 mb-6 max-w-3xl mx-auto">
-            Ihr strategischer Partner für nachhaltigen Erfolg im bayerischen Mittelstand
+            Ihr strategischer Partner für nachhaltigen Erfolg im Mittelstand
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
-              className="bg-slate-800 hover:bg-slate-900 text-white"
+              className="bg-slate-600 hover:bg-slate-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
               onClick={() => scrollToSection('kontakt')}
             >
               Kostenloses Erstgespräch
@@ -277,7 +289,7 @@ function App() {
                 <div 
                   key={index}
                   id={service.title.toLowerCase()}
-                  className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow border-2 border-slate-300"
+                  className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow border-2 border-slate-300 flex flex-col"
                 >
                   <div className={`${service.color} w-14 h-14 rounded-full flex items-center justify-center mb-4 mx-auto`}>
                     <Icon className="w-7 h-7 text-white" />
@@ -286,9 +298,7 @@ function App() {
                   <p className="text-sm text-gray-600 text-center mb-4">{service.subtitle}</p>
                   <p className="text-gray-700 text-center mb-6">{service.description}</p>
                   <Button 
-                    variant="outline" 
-                    className="w-full border-slate-400 text-slate-700 hover:bg-slate-50"
-                  >
+                    variant="default" className="w-full bg-slate-700 hover:bg-slate-800 text-white shadow-md hover:shadow-lg transition-all duration-200 mt-auto" >
                     Mehr erfahren
                   </Button>
                 </div>
@@ -334,7 +344,7 @@ function App() {
                         
                         <Button 
                           variant="default" 
-                          className="bg-slate-700 hover:bg-slate-800"
+                          className="bg-slate-700 hover:bg-slate-800 shadow-md hover:shadow-lg transition-all duration-200"
                         >
                           Mehr erfahren
                         </Button>
@@ -376,7 +386,7 @@ function App() {
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-3">Unser Investitionsprofil</h2>
           <p className="text-lg text-gray-600 text-center mb-8 max-w-3xl mx-auto">
-            Wir investieren gezielt in mittelständische Unternehmen mit klaren Kriterien und langfristiger Perspektive
+            Wir investieren gezielt in Unternehmen mit klaren Kriterien und langfristiger Perspektive
           </p>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {investmentCriteria.map((criterion, index) => {
@@ -405,7 +415,7 @@ function App() {
           </p>
           <Button 
             size="lg" 
-            className="bg-slate-800 hover:bg-slate-900"
+            className="bg-slate-600 hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all duration-200"
             onClick={() => scrollToSection('kontakt')}
           >
             Jetzt Gespräch vereinbaren
@@ -455,7 +465,7 @@ function App() {
           </p>
           <Button 
             size="lg" 
-            className="bg-slate-800 hover:bg-slate-900"
+            className="bg-slate-600 hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all duration-200"
             onClick={() => scrollToSection('kontakt')}
           >
             Prozess starten
@@ -512,7 +522,7 @@ function App() {
                     id="phone" 
                     name="phone"
                     type="tel" 
-                    placeholder="+49 (0) 89 123 456 78" 
+                    placeholder="Ihre Telefonnummer (optional)" 
                     value={formData.phone}
                     onChange={handleInputChange}
                   />
@@ -529,7 +539,7 @@ function App() {
                     onChange={handleInputChange}
                   />
                 </div>
-                <Button type="submit" className="w-full bg-slate-800 hover:bg-slate-700">
+                <Button type="submit" className="w-full bg-slate-600 hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all duration-200">
                   Gespräch vereinbaren
                 </Button>
               </form>
@@ -541,7 +551,7 @@ function App() {
               <div className="bg-slate-700 rounded-lg p-8">
                 <h3 className="text-2xl font-bold mb-4">Kontakt</h3>
                 <p className="text-gray-300 mb-6">
-                  Ihr direkter Draht zu unserem Team für strategische Partnerschaften im bayerischen Mittelstand.
+                  Ihr direkter Draht zu unserem Team für strategische Partnerschaften im Mittelstand.
                 </p>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
@@ -549,15 +559,12 @@ function App() {
                     <span>Bayern, Deutschland</span>
                   </div>
                   <div className="flex items-start gap-3">
-                    <a href="tel:+4989123456" className="flex items-start gap-3 hover:text-slate-400 transition-colors">
-                      <span className="text-lg">📞</span>
-                      <span>+49 (0) 89 123 456 78</span>
-                    </a>
+
                   </div>
                   <div className="flex items-start gap-3">
-                    <a href="mailto:nfo@leibinger-am.de" className="flex items-start gap-3 hover:text-slate-400 transition-colors">
+                    <a href="mailto:beteiligung@leibinger-am.de" className="flex items-start gap-3 hover:text-slate-400 transition-colors">
                       <span className="text-lg">✉️</span>
-                      <span>nfo@leibinger-am.de</span>
+                      <p>E-Mail: beteiligung@leibinger-am.de</p>
                     </a>
                   </div>
                 </div>
@@ -585,7 +592,7 @@ function App() {
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
                 <DialogHeader>
-                  <DialogTitle>Impressum</DialogTitle>
+                  <DialogTitle>Rechtliche Hinweise</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 text-sm">
                   <div>
@@ -596,7 +603,7 @@ function App() {
                   </div>
                   <div>
                     <h3 className="font-bold mb-2">Kontakt</h3>
-                    <p>Telefon: +49 (0) 89 123 456 78</p>
+                    <p></p>
                     <p>E-Mail: info@leibinger-am.de</p>
                   </div>
                   <div>
@@ -607,12 +614,12 @@ function App() {
                     <h3 className="font-bold mb-2">Registereintrag</h3>
                     <p>Eintragung im Handelsregister</p>
                     <p>Registergericht: Amtsgericht München</p>
-                    <p>Registernummer: HRB 123456</p>
+                    <p>Registernummer: HRB 289101</p>
                   </div>
                   <div>
                     <h3 className="font-bold mb-2">Umsatzsteuer-ID</h3>
                     <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
-                    <p>DE123456789</p>
+                    <p>DE367614650</p>
                   </div>
                 </div>
               </DialogContent>
