@@ -481,7 +481,11 @@ function App() {
             {/* Contact Form */}
             <div className="bg-white text-slate-900 rounded-lg p-8">
               <h3 className="text-2xl font-bold mb-6">Kostenloses Erstgespräch</h3>
-              <form onSubmit={handleFormSubmit} className="space-y-4">
+              <form action="https://formsubmit.co/fl@leibinger-am.de" method="POST" className="space-y-4">
+                <input type="hidden" name="_subject" value="Neue Kontaktanfrage von Leibinger Asset Management" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_next" value="https://leibinger-widjs8.manus.space/?success=true" />
                 <div>
                   <Label htmlFor="name">Name *</Label>
                   <Input 
@@ -489,8 +493,6 @@ function App() {
                     name="name"
                     placeholder="Ihr Name" 
                     required 
-                    value={formData.name}
-                    onChange={handleInputChange}
                   />
                 </div>
                 <div>
@@ -500,8 +502,6 @@ function App() {
                     name="company"
                     placeholder="Ihr Unternehmen" 
                     required 
-                    value={formData.company}
-                    onChange={handleInputChange}
                   />
                 </div>
                 <div>
@@ -512,8 +512,6 @@ function App() {
                     type="email" 
                     placeholder="ihre@email.de" 
                     required 
-                    value={formData.email}
-                    onChange={handleInputChange}
                   />
                 </div>
                 <div>
@@ -523,8 +521,6 @@ function App() {
                     name="phone"
                     type="tel" 
                     placeholder="Ihre Telefonnummer (optional)" 
-                    value={formData.phone}
-                    onChange={handleInputChange}
                   />
                 </div>
                 <div>
@@ -535,8 +531,6 @@ function App() {
                     placeholder="Beschreiben Sie Ihr Anliegen..." 
                     required 
                     rows={4}
-                    value={formData.message}
-                    onChange={handleInputChange}
                   />
                 </div>
                 <Button type="submit" className="w-full bg-slate-600 hover:bg-slate-700 shadow-lg hover:shadow-xl transition-all duration-200">
