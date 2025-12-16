@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://leibinger-widjs8.manus.space/sitemap.xml
-

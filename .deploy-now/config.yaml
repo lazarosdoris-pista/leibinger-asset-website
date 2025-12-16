@@ -1,5 +1,0 @@
-version: 1
-projectRoot: /
-buildCommand: pnpm run build
-publishDirectory: dist
-
