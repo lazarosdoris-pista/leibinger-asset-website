@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen w-full overflow-hidden flex flex-col md:flex-row">
       {/* Left Side: Minimalist Reality */}
-      <div className="w-full md:w-1/2 h-[60vh] md:h-full bg-black flex flex-col justify-center px-6 md:px-20 relative z-10 border-b md:border-b-0 md:border-r border-white/10 pt-20 md:pt-0">
+      <div className="w-full md:w-1/2 h-[60vh] md:h-full bg-black flex flex-col justify-center px-6 md:px-20 relative z-10 border-b md:border-b-0 md:border-r border-white/10 pt-32 md:pt-0">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -48,7 +48,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 1 }}
-            className="self-end text-right"
+            className="self-end text-right pt-20 md:pt-0"
           >
 
             <div className="text-2xl md:text-3xl font-display font-bold text-white/90 leading-tight">
