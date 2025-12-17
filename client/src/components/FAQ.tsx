@@ -10,7 +10,7 @@ export default function FAQ() {
   const faqs = [
     {
       question: "Ab welcher Phase investieren Sie genau?",
-      answer: "Wir fokussieren uns auf etablierte mittelständische Unternehmen in DACH-Region. Unser Sweetspot sind Unternehmen in Nachfolgesituationen, Wachstumsphasen oder komplexen Turnaround-Szenarien. Wir sind kein Early-Stage Venture Capital Investor, sondern Partner für den reifen Mittelstand."
+      answer: "Wir fokussieren uns auf etablierte mittelständische Unternehmen in der DACH-Region sowie auf engagierte Gründer mit skalierbaren Geschäftsmodellen. Unser Sweetspot sind Unternehmen in Nachfolgesituationen, Wachstumsphasen oder komplexen Turnaround-Szenarien. Wir sind kein klassischer Early-Stage Venture Capital Investor, suchen aber gezielt nach unternehmerischem Potenzial."
     },
     {
       question: "Bleibt das Management an Bord?",
@@ -22,11 +22,11 @@ export default function FAQ() {
     },
     {
       question: "Woher stammt das Kapital?",
-      answer: "Wir investieren primär eigenes Familienkapital. Das gibt uns maximale Unabhängigkeit und Flexibilität. Wir sind keinen externen Investoren oder starren Fondslaufzeiten verpflichtet und können Entscheidungen schnell und pragmatisch treffen."
+      answer: "Wir investieren ausschließlich eigene Mittel. Das gibt uns maximale Unabhängigkeit und Flexibilität. Wir sind keinen externen Investoren oder starren Fondslaufzeiten verpflichtet und können Entscheidungen schnell und pragmatisch treffen."
     },
     {
       question: "Wie hoch ist das Investitionsvolumen?",
-      answer: "Unser typisches Investitionsvolumen (Equity Ticket) liegt zwischen 2 und 10 Millionen Euro pro Transaktion. Bei größeren Transaktionen können wir flexibel Co-Investoren aus unserem Netzwerk hinzuziehen."
+      answer: "Unser typisches Investitionsvolumen (Equity Ticket) liegt bei bis zu 5 Millionen Euro pro Transaktion. Bei größeren Transaktionen können wir flexibel Co-Investoren aus unserem Netzwerk hinzuziehen."
     },
     {
       question: "Wie lange dauert der Prozess?",
