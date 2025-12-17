@@ -3,6 +3,7 @@ import Services from "@/components/Services";
 import InvestmentProfile from "@/components/InvestmentProfile";
 import Contact from "@/components/Contact";
 import Blog from "@/components/Blog";
+import FAQ from "@/components/FAQ";
 import Navigation from "@/components/Navigation";
 import { useEffect } from "react";
 
@@ -23,6 +24,7 @@ export default function Home() {
         <Services />
         <InvestmentProfile />
         <Blog />
+        <FAQ />
         <Contact />
       </main>
     </div>
