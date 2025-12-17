@@ -18,9 +18,9 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center p-6 mix-blend-difference text-white">
+      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center p-4 md:p-6 mix-blend-difference text-white">
         <Link href="/">
-          <div className="w-48 cursor-pointer">
+          <div className="w-32 md:w-48 cursor-pointer">
             <img src="/images/logo.png" alt="Leibinger Asset Management" className="w-full h-auto invert" />
           </div>
         </Link>
@@ -30,7 +30,7 @@ export default function Navigation() {
           className="group flex items-center gap-2 uppercase text-sm font-body tracking-widest hover:text-gray-300 transition-colors"
         >
           <span className="hidden sm:block">Menu</span>
-          <div className="relative w-8 h-8 flex items-center justify-center border border-white rounded-full group-hover:bg-white group-hover:text-black transition-all">
+          <div className="relative w-8 h-8 md:w-10 md:h-10 flex items-center justify-center border border-white rounded-full group-hover:bg-white group-hover:text-black transition-all">
             {isOpen ? <X size={16} /> : <Menu size={16} />}
           </div>
         </button>
@@ -43,9 +43,9 @@ export default function Navigation() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 bg-black z-40 flex flex-col justify-center items-center"
+            className="fixed inset-0 bg-black z-40 flex flex-col justify-center items-center p-4"
           >
-            <div className="flex flex-col gap-8 text-center">
+            <div className="flex flex-col gap-6 md:gap-8 text-center w-full max-w-md">
               {navItems.map((item, index) => (
                 <motion.a
                   key={item.name}
@@ -54,14 +54,14 @@ export default function Navigation() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 * index + 0.3 }}
-                  className="text-5xl md:text-7xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 hover:to-white transition-all cursor-pointer uppercase tracking-tighter"
+                  className="text-3xl md:text-7xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-500 hover:to-white transition-all cursor-pointer uppercase tracking-tighter"
                 >
                   {item.name}
                 </motion.a>
               ))}
             </div>
             
-            <div className="absolute bottom-10 left-0 w-full text-center text-gray-500 font-body text-sm uppercase tracking-widest">
+            <div className="absolute bottom-10 left-0 w-full text-center text-gray-500 font-body text-xs md:text-sm uppercase tracking-widest px-4">
               Wachstum gestalten. Werte schaffen.
             </div>
           </motion.div>

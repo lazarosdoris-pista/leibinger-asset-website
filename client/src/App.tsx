@@ -14,11 +14,10 @@ import CookieBanner from "./components/CookieBanner";
 function Router() {
   return (
     <Switch>
-      <Route path={"/"} component={Home} />
-      <Route path={"/blog/:id"} component={BlogPost} />
-      <Route path={"/impressum"} component={Impressum} />
-      <Route path={"/datenschutz"} component={Datenschutz} />
-      <Route path={"/404"} component={NotFound} />
+      <Route path="/" component={Home} />
+      <Route path="/blog/:id" component={BlogPost} />
+      <Route path="/impressum" component={Impressum} />
+      <Route path="/datenschutz" component={Datenschutz} />
       {/* Final fallback route */}
       <Route component={NotFound} />
     </Switch>

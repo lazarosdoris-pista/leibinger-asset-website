@@ -3,30 +3,30 @@ import LiquidCore from "./LiquidCore";
 
 export default function Hero() {
   return (
-    <section className="relative h-screen w-full overflow-hidden flex flex-col md:flex-row">
+    <section className="relative min-h-screen w-full overflow-hidden flex flex-col md:flex-row">
       {/* Left Side: Minimalist Reality */}
-      <div className="w-full md:w-1/2 h-1/2 md:h-full bg-black flex flex-col justify-center px-8 md:px-20 relative z-10 border-r border-white/10">
+      <div className="w-full md:w-1/2 h-[60vh] md:h-full bg-black flex flex-col justify-center px-6 md:px-20 relative z-10 border-b md:border-b-0 md:border-r border-white/10 pt-20 md:pt-0">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
         >
-          <h2 className="text-white/50 font-body uppercase tracking-widest text-sm mb-4">
+          <h2 className="text-white/50 font-body uppercase tracking-widest text-xs md:text-sm mb-4">
             Strategic Partner
           </h2>
-          <h1 className="text-6xl md:text-8xl font-display font-bold text-white leading-[0.9] mb-8">
+          <h1 className="text-5xl md:text-8xl font-display font-bold text-white leading-[0.9] mb-6 md:mb-8">
             WACHSTUM <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-600">
               GESTALTEN
             </span>
           </h1>
-          <p className="text-gray-400 max-w-md font-body text-lg leading-relaxed">
+          <p className="text-gray-400 max-w-md font-body text-base md:text-lg leading-relaxed mb-8 md:mb-0">
             Ihr strategischer Partner für nachhaltigen Erfolg im Mittelstand. 
             Wir transformieren Visionen in messbare Realität.
           </p>
           
-          <div className="mt-12 flex gap-6">
-            <button className="px-8 py-4 border border-white text-white font-body uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300">
+          <div className="mt-8 md:mt-12 flex gap-6">
+            <button className="px-6 py-3 md:px-8 md:py-4 border border-white text-white font-body uppercase tracking-widest text-sm md:text-base hover:bg-white hover:text-black transition-all duration-300">
               Erstgespräch
             </button>
           </div>
@@ -34,7 +34,7 @@ export default function Hero() {
       </div>
 
       {/* Right Side: Experimental Liquid Reality */}
-      <div className="w-full md:w-1/2 h-1/2 md:h-full bg-black relative overflow-hidden">
+      <div className="w-full md:w-1/2 h-[40vh] md:h-full bg-black relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-black to-black z-0" />
         
         {/* 3D Liquid Element */}
@@ -43,7 +43,7 @@ export default function Hero() {
         </div>
         
         {/* Visionary Overlay Elements */}
-        <div className="absolute inset-0 z-20 flex flex-col justify-between p-12 pointer-events-none">
+        <div className="absolute inset-0 z-20 flex flex-col justify-between p-6 md:p-12 pointer-events-none">
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -51,7 +51,7 @@ export default function Hero() {
             className="self-end text-right"
           >
 
-            <div className="text-3xl font-display font-bold text-white/90 leading-tight">
+            <div className="text-2xl md:text-3xl font-display font-bold text-white/90 leading-tight">
               BEYOND<br/>CAPITAL
             </div>
           </motion.div>
@@ -60,7 +60,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 1.2 }}
-            className="self-start max-w-xs"
+            className="self-start max-w-xs hidden md:block"
           >
             <div className="text-xs text-gray-500 uppercase tracking-[0.2em] mb-4">Mission</div>
             <p className="text-lg font-display text-white/80 leading-relaxed">
@@ -69,8 +69,8 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Interactive Floating Tags */}
-        <div className="absolute inset-0 z-20 pointer-events-none">
+        {/* Interactive Floating Tags - Hidden on mobile to reduce clutter */}
+        <div className="absolute inset-0 z-20 pointer-events-none hidden md:block">
            {['Innovation', 'Tradition', 'Excellence'].map((tag, i) => (
              <motion.div
                key={tag}
@@ -103,7 +103,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity, delay: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 text-xs uppercase tracking-[0.3em] z-30"
+        className="absolute bottom-4 md:bottom-10 left-1/2 -translate-x-1/2 text-white/30 text-[10px] md:text-xs uppercase tracking-[0.3em] z-30"
       >
         Scroll to Explore
       </motion.div>

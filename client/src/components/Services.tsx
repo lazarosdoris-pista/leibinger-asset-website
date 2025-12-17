@@ -1,41 +1,41 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, ChevronDown } from "lucide-react";
 
 const services = [
   {
     id: "01",
-    title: "Strategy",
+    title: "Strategie",
     subtitle: "Transformation & Vision",
-    description: "Märkte wandeln sich radikal. Wir entwickeln nicht nur Strategien, sondern transformieren Geschäftsmodelle. Von der digitalen Agenda bis zur nachhaltigen Neupositionierung – wir gestalten den Wandel aktiv.",
+    description: "Märkte wandeln sich radikal. Wir entwickeln nicht nur Konzepte, sondern transformieren Geschäftsmodelle. Von der digitalen Agenda bis zur nachhaltigen Neupositionierung – wir gestalten den Wandel aktiv.",
     tags: ["Digitale Transformation", "Geschäftsmodell-Innovation", "Marktstrategie", "Change Management"]
   },
   {
     id: "02",
     title: "Wachstum",
     subtitle: "Skalierung & Expansion",
-    description: "Von der Vision zur Million – Wir begleiten Ihr Unternehmen auf dem Weg zu nachhaltigem Wachstum und einer Skalierung auf über 1 Mio. EUR Umsatz.",
-    tags: ["Strategieentwicklung", "Marktexpansion", "Prozessoptimierung"]
+    description: "Von der Vision zur Marktführerschaft – Wir begleiten Ihr Unternehmen auf dem Weg zu nachhaltigem Wachstum und einer signifikanten Umsatzsteigerung.",
+    tags: ["Strategieentwicklung", "Marktexpansion", "Prozessoptimierung", "Vertriebssteuerung"]
   },
   {
     id: "03",
-    title: "Restructuring",
+    title: "Restrukturierung",
     subtitle: "Turnaround & Performance",
-    description: "Wir navigieren Unternehmen durch kritische Phasen. Mit präziser Analyse und konsequenter Umsetzung steigern wir die operative Performance und sichern die Zukunftsfähigkeit – auch in stürmischen Zeiten.",
-    tags: ["Turnaround Management", "Effizienzprogramme", "Liquiditätssicherung", "Krisenbewältigung"]
+    description: "Wir navigieren Unternehmen durch kritische Phasen. Mit präziser Analyse und konsequenter Umsetzung steigern wir die operative Leistung und sichern die Zukunftsfähigkeit – auch in herausfordernden Zeiten.",
+    tags: ["Turnaround Management", "Effizienzsteigerung", "Liquiditätssicherung", "Krisenbewältigung"]
   },
   {
     id: "04",
     title: "Beteiligung",
     subtitle: "Strategische Partnerschaften",
-    description: "Mehr als nur Kapital – Wir investieren direkt in Ihr Unternehmen und bringen aktive operative Unterstützung und jahrelange Expertise mit ein.",
-    tags: ["Direktinvestition", "Operative Unterstützung", "Netzwerk"]
+    description: "Mehr als nur Kapital – Wir investieren direkt in Ihr Unternehmen und bringen aktive operative Unterstützung sowie jahrelange Expertise ein.",
+    tags: ["Direktinvestition", "Operative Unterstützung", "Netzwerkzugang", "Langfristige Partnerschaft"]
   },
   {
     id: "05",
     title: "Due Diligence",
-    subtitle: "Intensive Prüfung & Analyse",
-    description: "Wir gehen tief ins Detail. Unsere Due Diligence ist kompromisslos gründlich, um Risiken zu minimieren und versteckte Potenziale aufzudecken. Wir analysieren Finanzen, Recht, Steuern und Marktposition bis ins kleinste Detail.",
+    subtitle: "Prüfung & Analyse",
+    description: "Wir gehen tief ins Detail. Unsere Analyse ist kompromisslos gründlich, um Risiken zu minimieren und versteckte Potenziale aufzudecken. Wir prüfen Finanzen, Recht, Steuern und Marktposition bis ins kleinste Detail.",
     tags: ["Finanzanalyse", "Rechtliche Prüfung", "Marktanalyse", "Risikobewertung"]
   },
   {
@@ -43,28 +43,34 @@ const services = [
     title: "Nachfolge",
     subtitle: "Unternehmensübergabe",
     description: "Ihr Lebenswerk in sicheren Händen – Wir entwickeln eine maßgeschneiderte Nachfolgestrategie und begleiten Sie durch den gesamten Übergabeprozess.",
-    tags: ["Nachfolgestrategie", "Übergabeprozess", "Sicherung"]
+    tags: ["Nachfolgestrategie", "Übergabeprozess", "Vermögenssicherung", "Generationswechsel"]
   }
 ];
 
 export default function Services() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [mobileExpandedIndex, setMobileExpandedIndex] = useState<number | null>(null);
+
+  const toggleMobile = (index: number) => {
+    setMobileExpandedIndex(mobileExpandedIndex === index ? null : index);
+  };
 
   return (
-    <section className="py-32 bg-black text-white relative overflow-hidden" id="expertise">
+    <section className="py-20 md:py-32 bg-black text-white relative overflow-hidden" id="expertise">
       <div className="container mx-auto px-4">
-        <div className="mb-20 border-b border-white/20 pb-8 flex justify-between items-end">
+        <div className="mb-12 md:mb-20 border-b border-white/20 pb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
           <h2 className="text-4xl md:text-6xl font-display font-bold uppercase">
             Unsere <br /> Expertise
           </h2>
-          <div className="hidden md:block text-right text-gray-400 font-body text-sm max-w-xs">
+          <div className="text-left md:text-right text-gray-400 font-body text-sm max-w-xs">
             Ganzheitliche Beratung und Investment für den Mittelstand.
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+        {/* Desktop Layout (Split Screen) */}
+        <div className="hidden lg:grid grid-cols-12 gap-24">
           {/* Left Column: Navigation / List */}
-          <div className="lg:col-span-5 flex flex-col gap-2">
+          <div className="col-span-5 flex flex-col gap-2">
             {services.map((service, index) => (
               <motion.div
                 key={service.id}
@@ -103,7 +109,7 @@ export default function Services() {
           </div>
 
           {/* Right Column: Content Display (Sticky) */}
-          <div className="lg:col-span-7 relative min-h-[400px]">
+          <div className="col-span-7 relative min-h-[400px]">
             <div className="sticky top-32">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -123,11 +129,11 @@ export default function Services() {
                     {services[activeIndex].subtitle}
                   </h3>
 
-                  <p className="text-xl md:text-3xl font-light leading-relaxed text-gray-200 mb-12">
+                  <p className="text-3xl font-light leading-relaxed text-gray-200 mb-12">
                     {services[activeIndex].description}
                   </p>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     {services[activeIndex].tags.map((tag, i) => (
                       <motion.div 
                         key={tag}
@@ -149,6 +155,69 @@ export default function Services() {
             </div>
           </div>
         </div>
+
+        {/* Mobile Layout (Accordion) */}
+        <div className="lg:hidden flex flex-col gap-4">
+          {services.map((service, index) => (
+            <div 
+              key={service.id}
+              className={`border border-white/10 rounded-lg overflow-hidden transition-all duration-300 ${
+                mobileExpandedIndex === index ? "bg-white/5 border-white/30" : "bg-transparent"
+              }`}
+            >
+              <button
+                onClick={() => toggleMobile(index)}
+                className="w-full flex items-center justify-between p-6 text-left"
+              >
+                <div>
+                  <div className="text-xs text-gray-500 mb-1 font-mono">{service.id}</div>
+                  <h3 className={`text-2xl font-display font-bold uppercase ${
+                    mobileExpandedIndex === index ? "text-white" : "text-gray-300"
+                  }`}>
+                    {service.title}
+                  </h3>
+                </div>
+                <ChevronDown 
+                  className={`text-gray-400 transition-transform duration-300 ${
+                    mobileExpandedIndex === index ? "rotate-180 text-white" : ""
+                  }`}
+                />
+              </button>
+
+              <AnimatePresence>
+                {mobileExpandedIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <div className="px-6 pb-6 pt-0">
+                      <div className="h-px w-full bg-white/10 mb-4" />
+                      <h4 className="text-sm text-gray-400 uppercase tracking-widest mb-4">
+                        {service.subtitle}
+                      </h4>
+                      <p className="text-gray-300 font-light leading-relaxed mb-6">
+                        {service.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {service.tags.map((tag) => (
+                          <span 
+                            key={tag}
+                            className="text-[10px] uppercase tracking-wider border border-white/20 px-3 py-1 rounded-full text-gray-400"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "wouter";
 
 export default function Contact() {
   return (
@@ -44,8 +45,8 @@ export default function Contact() {
             Leibinger Asset Management
           </div>
           <div className="flex justify-center gap-4">
-            <a href="/impressum" className="hover:text-white transition-colors">Impressum</a>
-            <a href="/datenschutz" className="hover:text-white transition-colors">Datenschutz</a>
+            <Link href="/impressum" className="hover:text-white transition-colors cursor-pointer">Impressum</Link>
+            <Link href="/datenschutz" className="hover:text-white transition-colors cursor-pointer">Datenschutz</Link>
           </div>
         </div>
       </div>
