@@ -29,7 +29,7 @@ export default function Navigation() {
     <>
       <nav 
         className={cn(
-          "fixed top-0 left-0 w-full z-50 flex justify-between items-center p-4 md:p-6 transition-all duration-300",
+          "fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-20 py-4 md:py-6 transition-all duration-300",
           scrolled ? "bg-black/80 backdrop-blur-md border-b border-white/10 py-3 md:py-4" : "bg-transparent mix-blend-difference"
         )}
       >
