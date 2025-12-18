@@ -34,11 +34,20 @@ export default function Hero() {
       </div>
 
       {/* Right Side: Experimental Liquid Reality */}
-      <div className="w-full md:w-1/2 h-[40vh] md:h-full bg-black relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-800/20 via-black to-black z-0" />
-        
-        {/* 3D Liquid Element */}
-        <div className="absolute inset-0 z-10">
+      <div className="w-full md:w-1/2 h-[40vh] md:h-full bg-black relative overflow-hidden group">
+        {/* Abstract 3D Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="/images/hero-abstract-3d.png" 
+            alt="Abstract 3D Liquid Form" 
+            className="w-full h-full object-cover opacity-80 scale-105 group-hover:scale-110 transition-transform duration-[20s] ease-linear"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40" />
+          <div className="absolute inset-0 bg-black/20 backdrop-blur-[2px]" />
+        </div>
+
+        {/* 3D Liquid Element (Overlay) */}
+        <div className="absolute inset-0 z-10 opacity-50 mix-blend-overlay pointer-events-none">
           <LiquidCore className="w-full h-full" />
         </div>
         

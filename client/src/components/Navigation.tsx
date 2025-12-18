@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link } from "wouter";
@@ -15,10 +15,24 @@ const navItems = [
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center p-4 md:p-6 mix-blend-difference text-white">
+      <nav 
+        className={cn(
+          "fixed top-0 left-0 w-full z-50 flex justify-between items-center p-4 md:p-6 transition-all duration-300",
+          scrolled ? "bg-black/80 backdrop-blur-md border-b border-white/10 py-3 md:py-4" : "bg-transparent mix-blend-difference"
+        )}
+      >
         <Link href="/">
           <div className="w-32 md:w-48 cursor-pointer">
             <img src="/images/logo.png" alt="Leibinger Asset Management" className="w-full h-auto invert" />
